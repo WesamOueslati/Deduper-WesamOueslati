@@ -1,5 +1,7 @@
 # Deduper tests
 
+*** Note: Everything past the sequence column is not relevant for this task unless we are doing error correction so, we do not include the sequences and their qualities so tests are easier to see. *** 
+
 ## Case 1: No overlap (diff chr)
 <p> 
 The reads are on completely different chromosomes
