@@ -2,6 +2,7 @@
 
 ## Problem Definition:
 <p>
+PCR duplicates originate when a DNA molecule is copied multiple times during amplification. This can skew results or produce biased results during analysis. So, we want to remove these duplicated before proceeding with analysis.
 Given a sam file, we only want to keep a single copy of each sequence. That is, if multiple entries in the sam file originate from the same molecule, we want to remove all but one.
 </p>
 
@@ -21,6 +22,7 @@ store first entry in memory (dict)
 while True:
     while curr_read overlaps(stored_read):
         entry = read_line()
+        if UMI(entry) not in UMI list: continue
         add(entry) to dict
 
     for entry in dict():
