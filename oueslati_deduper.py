@@ -181,12 +181,13 @@ def dedupe(input, output, umis) -> dict:
         "unique_reads": 0,
         "unmapped_reads" : 0
     }
-    n_reads = 0
+    # n_reads = 0
     hashes = {}
     umi_list = extract_umis(umis)
     prev_chr = ""
-    # with gzip.open(input, 'rt') as fh, gzip.open(output, 'wt') as out:
-    with open(input, 'rt') as fh, open(output, 'wt') as out, open('per_chrom.tsv', 'wt') as per_chrom:
+    
+    # with open(input, 'rt') as fh, open(output, 'wt') as out, open('per_chrom.tsv', 'wt') as per_chrom:
+    with open(input, 'rt') as fh, open(output, 'wt') as out:
         for line in fh:
             # Header lines are skipped
             if line.startswith('@'):
@@ -199,8 +200,8 @@ def dedupe(input, output, umis) -> dict:
             
             # Empty records when moving on to next chr
             if chr != prev_chr:
-                per_chrom.write(f"{prev_chr}\t{n_reads}\n")
-                n_reads = 0
+                # per_chrom.write(f"{prev_chr}\t{n_reads}\n")
+                # n_reads = 0
                 hashes.clear()
                 prev_chr = chr
             if umi not in umi_list: 
@@ -220,7 +221,7 @@ def dedupe(input, output, umis) -> dict:
                 hashes[start].append(concat)
                 out.write(f"{line}\n")
                 stats['unique_reads'] += 1
-                n_reads += 1
+                # n_reads += 1
             else: # <- 5' was encountered before
                 if concat in hashes[start]: # <- # they also have the same umi and are on the same strand
                     stats["duplicates"] += 1
@@ -228,9 +229,9 @@ def dedupe(input, output, umis) -> dict:
                     out.write(f"{line}\n")
                     hashes[start].append(concat)
                     stats['unique_reads'] += 1
-                    n_reads += 1
+                    # n_reads += 1
                     
-        per_chrom.write(f"{chr}\t{n_reads}")
+        # per_chrom.write(f"{chr}\t{n_reads}")
     return stats
 
 if __name__ == "__main__":
